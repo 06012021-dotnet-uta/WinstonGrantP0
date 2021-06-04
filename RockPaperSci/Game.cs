@@ -16,7 +16,7 @@ namespace RockPaperSci
            do{
                 bool howMany = Int32.TryParse(Console.ReadLine(), out catchNum );
 
-                if (catchNum < 1 || catchNum >10)
+                if ((catchNum < 1 || catchNum >10) || !howMany)
                     {System.Console.WriteLine("the number has to be greater then 0 and less then 10" );}
 
             }
@@ -28,10 +28,7 @@ namespace RockPaperSci
 
        public string HowManyRoundsQ () => ($"How many rounds shall we need to win to claim victory \n let's not make this unreasonable huh?");
 
-       public void TimeToDuel ()
-       {
 
-       }
 
     }
 }

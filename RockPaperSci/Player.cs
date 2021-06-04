@@ -44,17 +44,16 @@ namespace RockPaperSci
                 //checking numbers are good and if they are even numbers
                 if (RPSChoiceInt > 3 || RPSChoiceInt < 1 ) System.Console.WriteLine("please select a weapon by choosing 1-3 \n 1=rock 2=paper 3=sword");
             }
-            while(!RPSChoiceBool || (RPSChoiceInt < 1 && RPSChoiceInt > 3 ));
+            while(!RPSChoiceBool || (RPSChoiceInt < 1 || RPSChoiceInt > 3 ));
 
             // setting the RPS Choice for the showdown
             this.RPSChoiceInt = RPSChoiceInt;
 
             //letting the player now what they have done
-            return ($"I see you have choosen death... \nI mean {(RSB)RPSChoiceInt}");
+            return ($"I see you have choosen {(RSB)RPSChoiceInt}");
 
         }
 
-        //public void Roll()
     }
 
     public class ComputerPlayer : IPlayer

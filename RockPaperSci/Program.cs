@@ -56,15 +56,23 @@ namespace RockPaperSci
                         (human.RPSChoiceInt == 3 && cpu.RPSChoiceInt == 2)) 
                         //these are all the sceneerios in which the human wins! of course you got to hit with the NANI
                         {human.GamesWon++;
+
+                        // space for readability
+                        System.Console.WriteLine();
                         System.Console.WriteLine(cpu.RoundLossLine);
                         }
 
                     else if (human.RPSChoiceInt != cpu.RPSChoiceInt) 
                     //I don't have anything for a draw so all other scenerios equates to cpu win and of course a win line
                         {cpu.GamesWon++;
+
+                        //space for readability
+                        System.Console.WriteLine();
                         System.Console.WriteLine(cpu.RoundWinLine);
                         } 
 
+                    //keeping score
+                    System.Console.WriteLine("");
                     System.Console.WriteLine($"I the almighty {cpu.PlayerName} have {cpu.GamesWon} wins\n you the puny human {human.PlayerName} have {human.GamesWon} wins"); 
                     //end of match would you like another
                 }   while(human.GamesWon < game.BestOf && cpu.GamesWon < game.BestOf );
@@ -73,7 +81,7 @@ namespace RockPaperSci
             System.Console.WriteLine(((human.GamesWon>cpu.GamesWon)?cpu.MatchLoss:cpu.MatchWin));
             
             //checking if they dare take a rematch
-            System.Console.WriteLine($"If you would like to be beat again type y to quit press anything else");
+            System.Console.WriteLine($"If you would like to be beat again type y to quit press anything");
             string Again=Console.ReadLine();
             playAgain= Again.ToLower();
 
