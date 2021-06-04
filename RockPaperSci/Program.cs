@@ -3,65 +3,79 @@
 namespace RockPaperSci
 {
 
-          enum RSB
-        {
-            Rock = 1,
-            Paper = 2,
-            Sword = 3
-        }
-
     class Program
     {
 
         static void Main(string[] args)
         {
-            //variable out of scope
+
+            //variable out of scope for play again to continue playing do.while loop
            string playAgain;
            
-           do{ //play again do
-                //       the call out                                 
-                Console.WriteLine("Welcom to RO SHAM BO THUNDER DOME\nWho dare challange the great computer?!?");
-                string antagonist = Console.ReadLine();
-                //        the variables out of scope
-                bool antagChoiceBool;
-                int antagChoiceInt;
-                Random random = new Random();
-                int antagonistWins =0;
-                int heroWins =0;
-                int gamesPlayed = 0;
+           do{ //play again do/while loop to continue
 
-                 do{
-                    do{ //input verification
-                        Console.WriteLine($"Choose your weapon {antagonist} \n type 1 for Rock \n type 2 for Paper \n type 3 for Sword");
-                        //        checking input        
-                        string antagChoiceStg = Console.ReadLine();
-                        antagChoiceBool = Int32.TryParse(antagChoiceStg, out antagChoiceInt);
-                        //        checking numbers
-                        if (antagChoiceInt > 3 ) System.Console.WriteLine("please select a weapon by choosing 1-3");
-                        if (antagChoiceInt < 1 ) System.Console.WriteLine("please select a weapon by choosing 1-3");
-                        //       the great checker           
-                    } while(!antagChoiceBool || (antagChoiceInt < 1 || antagChoiceInt > 3 ));
-                
-                    //       the response, up the gamesplayed
-                    gamesPlayed ++;
-                    System.Console.WriteLine($"I see you have choosen death {antagonist}... \nI mean {(RSB)antagChoiceInt}");
-                    //       the roll 
-                    int heroRSBInt = random.Next(1,4); 
-                    System.Console.WriteLine($"I, the all mighty computer have choosen LIIFFEE... \n I mean {(RSB)heroRSBInt}");
-                
-                    if ((heroRSBInt == 1 && antagChoiceInt == 3) ||
-                        (heroRSBInt == 2 && antagChoiceInt == 1) ||
-                        (heroRSBInt == 3 && antagChoiceInt == 2)) heroWins++;
+            //creating a CPU, Game and a Human player!
+           
+            ComputerPlayer cpu = new ComputerPlayer();
+            HumanPlayer human = new HumanPlayer();
+            Game game = new Game();
+           
 
-                    else if (heroRSBInt != antagChoiceInt) antagonistWins++; 
+           //getting the basic info from the human!
 
-                    System.Console.WriteLine($"I the almighty computer have {heroWins} wins\nAnd you the puny human {antagonist} have {antagonistWins} wins"); 
+            System.Console.WriteLine(cpu.Intro());
+            
+            //getting the user name
+            human.WhatIsYourName();
+            System.Console.WriteLine(cpu.INowKnowYourName(human.PlayerName));
+            
+            //asking for win conditions 
+            System.Console.WriteLine(game.HowManyRoundsQ());
+
+            //checking for win conditions
+            game.HowManyRoundsMath();
+
+                //playing the amount of matches to win from game.BestOf do loop
+                do{
+                    
+                    //asking for RPS
+                    Console.WriteLine($"Choose your weapon {human.PlayerName} \n type 1 for Rock \n type 2 for Paper \n type 3 for Sword");
+
+                    //getting the stupid human to choose corectly
+                    System.Console.WriteLine(human.ChooseYourWeapon());        
+
+                    //keeping track of the number of games
+                    game.NumberOfGames +=1;
+                    
+                    //       the cpu choosing Rock Paper Scissors
+                    System.Console.WriteLine(cpu.ChoosingMyWeapon());
+
+
+                    if ((human.RPSChoiceInt == 1 && cpu.RPSChoiceInt == 3) ||
+                        (human.RPSChoiceInt == 2 && cpu.RPSChoiceInt == 1) ||
+                        (human.RPSChoiceInt == 3 && cpu.RPSChoiceInt == 2)) 
+                        //these are all the sceneerios in which the human wins! of course you got to hit with the NANI
+                        {human.GamesWon++;
+                        System.Console.WriteLine(cpu.RoundLossLine);
+                        }
+
+                    else if (human.RPSChoiceInt != cpu.RPSChoiceInt) 
+                    //I don't have anything for a draw so all other scenerios equates to cpu win and of course a win line
+                        {cpu.GamesWon++;
+                        System.Console.WriteLine(cpu.RoundWinLine);
+                        } 
+
+                    System.Console.WriteLine($"I the almighty {cpu.PlayerName} have {cpu.GamesWon} wins\n you the puny human {human.PlayerName} have {human.GamesWon} wins"); 
                     //end of match would you like another
-                }   while(heroWins < 2 && antagonistWins < 2 );
+                }   while(human.GamesWon < game.BestOf && cpu.GamesWon < game.BestOf );
 
-                System.Console.WriteLine($"If you would like to be beat again type y");
-                string Again=Console.ReadLine();
-                playAgain= Again.ToLower();
+            //got to hit em with a victory or loss line
+            System.Console.WriteLine(((human.GamesWon>cpu.GamesWon)?cpu.MatchLoss:cpu.MatchWin));
+            
+            //checking if they dare take a rematch
+            System.Console.WriteLine($"If you would like to be beat again type y to quit press anything else");
+            string Again=Console.ReadLine();
+            playAgain= Again.ToLower();
 
             }while(playAgain=="y");
 
