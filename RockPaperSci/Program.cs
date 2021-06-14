@@ -5,6 +5,9 @@ namespace RockPaperSci
 
     class Program
     {
+        ComputerPlayer cpu = new ComputerPlayer();
+        HumanPlayer human = new HumanPlayer();
+        Game game = new Game();
 
         static void Main(string[] args)
         {
@@ -16,9 +19,7 @@ namespace RockPaperSci
 
             //creating a CPU, Game and a Human player!
            
-            ComputerPlayer cpu = new ComputerPlayer();
-            HumanPlayer human = new HumanPlayer();
-            Game game = new Game();
+           
            
 
            //getting the basic info from the human!
@@ -78,8 +79,7 @@ namespace RockPaperSci
                 }   while(human.GamesWon < game.BestOf && cpu.GamesWon < game.BestOf );
 
             //got to hit em with a victory or loss line
-            System.Console.WriteLine(((human.GamesWon>cpu.GamesWon)?cpu.MatchLoss:cpu.MatchWin));
-            
+            VoiceLines.Who
             //checking if they dare take a rematch
             System.Console.WriteLine($"If you would like to be beat again type y to quit press anything");
             string Again=Console.ReadLine();
