@@ -9,4 +9,8 @@ namespace viewerControl
 			Console.WriteLine("Hello World!");
 		}
 	}
+	class CurrentCustomer 
+	{
+	
+	}
 }

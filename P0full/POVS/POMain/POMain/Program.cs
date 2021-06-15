@@ -13,12 +13,19 @@ namespace POMain
 			
 			P0Context context = new P0Context();
 			HeyListen hey = new HeyListen();
+			var stillShoping = false;
 			{
-				hey.LogInQ();
-				
+				do
+				{
+					hey.LogInQ();
+
+
+
+
+					stillShoping = hey.StillShopping();
+				}
+				while (stillShoping);
 			}
-
-
 		}
 	}
 }
