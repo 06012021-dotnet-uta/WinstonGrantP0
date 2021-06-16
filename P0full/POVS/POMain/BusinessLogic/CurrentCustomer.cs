@@ -9,6 +9,6 @@ namespace BusinessLogic
 {
 	class CurrentCustomer: Customer
 	{
-
+		
 	}
 }

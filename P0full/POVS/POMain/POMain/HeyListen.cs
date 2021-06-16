@@ -11,10 +11,10 @@ public class HeyListen
 	LogicClass Logic = new LogicClass();
 
 	//this is the opening asking for log in info
-	public void LogInQ()
+	public void Welcome()
 	{
 		//  Hello  //
-		Console.WriteLine($"\tWelcome trainer to the POKEMON pokemart Pokeshop, \n\t Do you have an acount with us? Type yes if you do \n\t If not no worries we will create one!?");
+		Console.Write($"\tWelcome trainer to the POKEMON pokemart Pokeshop,\n\tDo you have an acount with us?\n\tType yes if you do! \n\texit if you want to exit the program...\n\tpress anything else to create an acount!");
 
 		// catching the response editing it and moving on  //
 		string resoponse = Console.ReadLine();
@@ -23,19 +23,25 @@ public class HeyListen
 		//if y push to log in method else push to create acount method
 		if (editedResponse.StartsWith($"y"))
 		{
-			//go to log in
-			Console.WriteLine($""); 
+			//go to login
+			Console.Write($"\tWhat is your Lastname? ");
+			Logic.LogInLastName();
 		}
-		//go to create an acount
-		Logic.CreateAnAccount();
-		Console.WriteLine($""); 
+		else if (editedResponse == "exit")
+		{
+			exit();
+		}
+		else
+		{
+			//go to create an acount
+			Logic.CreateAnAccount();
+		}
 	}
-
-	//
+	
 	public bool StillShopping()
 	{
 
-		Console.WriteLine($"\tThank you for choosing us for your poke needs\n\t if you would like to keep shopping type yes");
+		Console.Write($"\tThank you for choosing us for your poke needs\n\tIf you would like to keep shopping type yes: ");
 
 		string resoponse = Console.ReadLine();
 		string editedResponse = resoponse.Trim().ToLower();
@@ -51,7 +57,8 @@ public class HeyListen
 
 	public void exit() 
 	{
-		Console.WriteLine("Hey, \n have a good day!");
+		Console.WriteLine("\tHey, \n\thave a good day!");
+		Console.WriteLine();
 		//if (exit.ToLower() == "exit")
 
 
