@@ -13,18 +13,24 @@ namespace POMain
 			
 			P0Context context = new P0Context();
 			HeyListen hey = new HeyListen();
-			var stillShoping = false;
+			LogicClass LC = new LogicClass();
+			var stillShoping = true;
 			{
 				do
 				{
-					hey.LogInQ();
+				hey.Welcome();
+
+				
 
 
+
+					
 
 
 					stillShoping = hey.StillShopping();
 				}
 				while (stillShoping);
+				
 			}
 		}
 	}

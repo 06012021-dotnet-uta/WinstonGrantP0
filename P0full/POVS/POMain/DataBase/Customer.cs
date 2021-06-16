@@ -16,7 +16,9 @@ namespace DataBase
         public int CustomerId { get; set; }
         public string Fname { get; set; }
         public string Lname { get; set; }
+        public int? DefaultStore { get; set; }
 
+        public virtual StoreLocation DefaultStoreNavigation { get; set; }
         public virtual ICollection<CustomerOrder> CustomerOrders { get; set; }
         public virtual ICollection<OrderedProduct> OrderedProducts { get; set; }
     }

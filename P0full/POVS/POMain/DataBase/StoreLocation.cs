@@ -10,6 +10,7 @@ namespace DataBase
         public StoreLocation()
         {
             CustomerOrders = new HashSet<CustomerOrder>();
+            Customers = new HashSet<Customer>();
             Inventories = new HashSet<Inventory>();
         }
 
@@ -17,6 +18,7 @@ namespace DataBase
         public string LocationName { get; set; }
 
         public virtual ICollection<CustomerOrder> CustomerOrders { get; set; }
+        public virtual ICollection<Customer> Customers { get; set; }
         public virtual ICollection<Inventory> Inventories { get; set; }
     }
 }

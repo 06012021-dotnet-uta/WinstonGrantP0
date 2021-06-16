@@ -53,6 +53,11 @@ namespace DataBase
                 entity.Property(e => e.Lname)
                     .HasMaxLength(20)
                     .HasColumnName("LName");
+
+                entity.HasOne(d => d.DefaultStoreNavigation)
+                    .WithMany(p => p.Customers)
+                    .HasForeignKey(d => d.DefaultStore)
+                    .HasConstraintName("FK__Customer__Defaul__01142BA1");
             });
 
             modelBuilder.Entity<CustomerOrder>(entity =>
