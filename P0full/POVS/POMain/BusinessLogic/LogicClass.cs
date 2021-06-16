@@ -27,7 +27,7 @@ namespace BusinessLogic
 				FName = rawFName.Trim();
 				//input validation for firstname
 
-				if (FName.Length > 20 && FName == null)
+				if (FName.Length > 20 || FName == null)
 					{Console.WriteLine($"\tplease give us a name under 20 characters that's also not empty please"); }
 			}
 			while (FName.Length > 20 || FName == null);
@@ -115,7 +115,7 @@ namespace BusinessLogic
 
 				string Lname = rawLname.ToLower().Trim();
 
-			Console.Write("what is your first name: ");
+			Console.Write("\twhat is your first name: ");
 
 			string rawWname = Console.ReadLine();
 
