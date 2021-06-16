@@ -14,7 +14,7 @@ public class HeyListen
 	public void Welcome()
 	{
 		//  Hello  //
-		Console.Write($"\tWelcome trainer to the POKEMON pokemart Pokeshop,\n\tDo you have an acount with us?\n\tType yes if you do! \n\texit if you want to exit the program...\n\tpress anything else to create an acount!");
+		Console.Write($"\tWelcome trainer to the POKEMON pokemart Pokeshop,\n\tDo you have an acount with us?\n\tType yes if you do! \n\n\n\tType exit to exit if you want to exit the program...\n\tpress anything else to create an acount!");
 
 		// catching the response editing it and moving on  //
 		string resoponse = Console.ReadLine();
