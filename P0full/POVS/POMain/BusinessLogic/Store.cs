@@ -7,101 +7,70 @@ using DataBase;
 
 namespace BusinessLogic
 {
-	class Store
+	public class Store
 	{
 		P0Context context = new P0Context();
+		LogicClass logic = new LogicClass();
 
 
 		public void theStore(Customer user)
 		{
-			var storeloc1 = from c in context.StoreLocations
-							where c.LocationId == 3
-							select c;
-			var storeloc2 = from c in context.StoreLocations
-							where c.LocationId == 4
-							select c;
-			var storeloc3 = from c in context.StoreLocations
-							where c.LocationId == 5
-							select c;
 
-			var palletTown = storeloc1.SingleOrDefault();
-			var lavender = storeloc2.SingleOrDefault();
-			var cerulean = storeloc3.SingleOrDefault();
+			var locationList = context.StoreLocations.ToList();
 
-			Console.WriteLine();
+
+			//var storeloc1 = from c in context.StoreLocations
+			//				where c.LocationId == 3
+			//				select c;
+			//var storeloc2 = from c in context.StoreLocations
+			//				where c.LocationId == 4
+			//				select c;
+			//var storeloc3 = from c in context.StoreLocations
+			//				where c.LocationId == 5
+			//				select c;
+
+
 			Console.WriteLine($"\twelcome {user.Fname}");
 
-			switch (user.DefaultStore)
-			{
-				case 3:
-					Console.WriteLine($"\twe see you like to frequent {palletTown.LocationName} ");
-					break;
-				case 4:
-					Console.WriteLine($"\twe see you like to frequent {lavender.LocationName} ");
-					break;
-				case 5:
-					Console.WriteLine($"\twe see you like to frequent {cerulean.LocationName} ");
-					break;
-			}
+			var defaultLocation = (from x in locationList where x.LocationId == user.DefaultStore select x).FirstOrDefault();
+
+			Console.WriteLine($"\t We see you like to frequent {defaultLocation.LocationName}");
+
 
 			Console.Write($"\twould you like to change locations? type yes if so: ");
-			string rawUserResponse = Console.ReadLine();
-			string userResponse = rawUserResponse.ToLower().Trim();
+			string userResponseToLocationChange = logic.CheckStringResponse(Console.ReadLine());
 
-			if (userResponse.StartsWith("y"))
+			if ((userResponseToLocationChange).StartsWith("y"))
 			{
-				bool choiceBool = false;
-				do
+				int i = 0;
+				List<int> sizeOfLocations = new List<int> ();
+				Console.WriteLine("\n\twould you like to choose: ");
+				foreach (var a in locationList)
 				{
-
-					Console.Write($"\twhich store would you like to choose: \n\t{palletTown.LocationId} for {palletTown.LocationName} or \n\t{lavender.LocationId} for {lavender.LocationName} or \n\t{cerulean.LocationId} for {cerulean.LocationName} ");
-
-					var rawChoice = Console.ReadLine();
-
-					choiceBool = Int32.TryParse(rawChoice, out int choice);
-
-
-					switch (choice)
-					{
-						case 3:
-							Console.WriteLine($"\twe see you like to frequent {palletTown.LocationName} ");
-							Pallet(user);
-							break;
-						case 4:
-							Console.WriteLine($"\twe see you like to frequent {lavender.LocationName}");
-							Lavender(user);
-							break;
-						case 5:
-							Console.WriteLine($"\twe see you like to frequent {cerulean.LocationName}");
-							Cerulean(user);
-							break;
-						default:
-							Console.WriteLine($"\t hahaha did you get hit with confusion? try again lol");
-							break;
-
-
-					}//switch
-				} while (!choiceBool);
-				   //while
-			}//if
-			else 
-			{
-				switch (user.DefaultStore)
-				{
-					case 3:
-						Pallet(user);
-						break;
-					case 4:
-						Lavender(user);
-						break;
-					case 5:
-						Cerulean(user);
-						break;
+					sizeOfLocations[i] = a.LocationId;
+					Console.WriteLine($"\n\t {a.LocationId} for {a.LocationName}");
+					i++;
 				}
+				sizeOfLocations.Sort();
+
+				int userToLocationChange = logic.CheckIntResponse(Console.ReadLine(), (sizeOfLocations[0]), (sizeOfLocations[i - 1]));
+
+				StoreLocation storeToGoTo = (from x in locationList where x.LocationId == userToLocationChange select x).FirstOrDefault();
+
+				SpecificStore(user, storeToGoTo);
+			}//if
+
+			SpecificStore(user, defaultLocation);
+		}//the store
+
+		 //got this from techiedelite
+
+		protected void SpecificStore(Customer currentCustomer, StoreLocation store)
+			{
+
 
 			}
-		}//the store
-		//got this from techiedelite
+
 		public static void PrintShoppingKart<K,V>(Dictionary<K, V> dict)
 		{
 			foreach (KeyValuePair<K, V> entry in dict)
@@ -110,6 +79,7 @@ namespace BusinessLogic
 				Console.WriteLine("\tTo checkout type checkout else keep shopping!");
 			}
 		}
+
 
 		public void Pallet(Customer user)
 		{

@@ -1,59 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using DataBase;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
+
 
 
 namespace BusinessLogic
 {
 	public class LogicClass
 	{
-		
+
 		P0Context context = new P0Context();
-		public void CreateAnAccount()
-		{
-			//these will be for the database creation of a new customer
-			string LName;
-			string FName;
-
-			//gets first name
-			do
-			{
-				//getting first name for log in
-
-				Console.Write($"\tWelcome to the world of pokemon young trainer!\n\t what is your firstname: ");
-				string rawFName = Console.ReadLine();
-				FName = rawFName.Trim();
-				//input validation for firstname
-
-				if (FName.Length > 20 || FName == null)
-					{Console.WriteLine($"\tplease give us a name under 20 characters that's also not empty please"); }
-			}
-			while (FName.Length > 20 || FName == null);
-
-			//get last name
-
-			do
-			{
-				Console.Write($"\t{FName} what is your last name? ");
-				string rawLName = Console.ReadLine();
-				LName = rawLName.Trim();
-				//input validation for lastname
-
-				if (LName.Length > 20 || LName == null)
-				{ Console.WriteLine($"\tplease give us a name under 20 characters that's also not empty please"); }
-			}
-			while (LName.Length > 20 || LName == null);
 
 
-
-			//put a method that comits here!
-			GetDefaultStore(FName, LName);
-			//ComitCustomer(FName,LName);
-		}
-
-		public void ComitCustomer(string FName, string LName,int storeID) 
+		public void ComitCustomer(string FName, string LName, int storeID)
 		{
 			//saves the username and gens the id as a password
 			Console.WriteLine($"\tHello {FName} {LName} Congratulations on creating an acount!");
@@ -74,8 +34,8 @@ namespace BusinessLogic
 		{
 
 			var storeNames = from stores in context.StoreLocations
-											where stores.LocationId> 1
-											select stores;
+							 where stores.LocationId > 1
+							 select stores;
 			int storeLocationID;
 			bool stayInTheLoopBoy = true;
 			do
@@ -99,43 +59,34 @@ namespace BusinessLogic
 				stayInTheLoopBoy = (userInput != checkStoreLocation[0] && userInput != checkStoreLocation[1] && userInput != checkStoreLocation[2]);
 				//Console.WriteLine($"{checkStoreLocation[0]}, {checkStoreLocation[1]},{checkStoreLocation[2]}, {userInput}, {stayInTheLoopBoy}");
 				storeLocationID = userInput;
-				
+
 			} while (stayInTheLoopBoy);
 
 
 			ComitCustomer(lastName, firstName, storeLocationID);
 
 		}
-		public void LogInLastName()
+		public bool LogInCheck(string firstName, string lastName, out Customer returnCustomer)
 		{
-			//takes in the last name
-			
-			
-				string rawLname = Console.ReadLine();
-
-				string Lname = rawLname.ToLower().Trim();
-
-			Console.Write("\twhat is your first name: ");
-
-			string rawWname = Console.ReadLine();
-
-			string Wname = rawWname.ToLower().Trim();
-			//I got help with this from a lot of people
-
-			var check = from c in context.Customers
-											where c.Lname == Lname && c.Fname == Wname
-											select c;
-			   var check1 = check.SingleOrDefault();
-
-
-			if (check1 == null)
-			{ CreateAnAccount(); }
-			else
+			Console.WriteLine( context.Customers.Count());
+			try
 			{
-				Store store = new Store();
-				store.theStore(check1);
+				var checkInformationRaw = from c in context.Customers
+							where c.Lname == lastName && c.Fname == firstName
+							select c;
+				 returnCustomer = checkInformationRaw.SingleOrDefault();
+
+				if (returnCustomer == null)
+				{ return false; }
+				else
+				{
+					return true;}
 			}
-			
+			catch (Exception)
+			{ }
+
+			returnCustomer = null;
+			return false;
 
 			//bool safe = true;
 			//int pwAttempts = 3;
@@ -143,7 +94,7 @@ namespace BusinessLogic
 			//while (safe) 
 			//{
 			//Console.Write($"\n\twhat is your password? ");
-			
+
 			//	//while (true)
 			//	//{
 			//var key = System.Console.ReadKey(true);
@@ -155,7 +106,7 @@ namespace BusinessLogic
 			//	if (passwords == pass)
 			//	{
 			//		Console.WriteLine("Succesful LogIn!");
-					
+
 			//		// enter store;
 			//	}
 
@@ -170,10 +121,6 @@ namespace BusinessLogic
 
 
 			//}
-
-			
-
-
 		}
 
 		public void storeAccess(string lastName) 
@@ -182,6 +129,46 @@ namespace BusinessLogic
 
 
 		}
+
+		public int CheckIntResponse(string userInput, int intMin, int intMax)
+		{
+			int intToCheck = 0;
+
+			bool boolintToCheck = Int32.TryParse(userInput, out intToCheck);
+
+
+			if (intToCheck < intMin && intToCheck > intMax)
+			{
+				do
+				{
+					Console.WriteLine("invalid input");
+					boolintToCheck = Int32.TryParse(userInput, out intToCheck);
+
+				} while (intToCheck > intMax && intToCheck <= intMax && boolintToCheck == false);
+			}
+			return intToCheck;
+
+		}
+
+		public string CheckStringResponse(string userInput)
+		{
+			userInput.Trim().ToLower();
+			if (userInput.Length > 20 || (string.IsNullOrEmpty(userInput)))
+			{
+				do
+				{
+					Console.WriteLine("\n\tYour input is too long or you just pressed enter try again");
+					userInput.Trim().ToLower();
+					userInput = Console.ReadLine();
+
+				} while (userInput.Length > 20 || string.IsNullOrEmpty(userInput));
+
+			}
+
+			return userInput;
+
+		}
+
 	}
 
 
