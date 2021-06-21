@@ -16,12 +16,16 @@ namespace POMain
 
 		//this is the opening asking for log in info 
 		//updated
+
+		/// <summary>
+		/// the opening method that starts the store
+		/// </summary>
 		public void Welcome()
 		{
 			//  Hello  //
 			//Console.Write($"\tWelcome trainer to the POKEMON pokemart Pokeshop,\n\tDo you have an acount with us?\n\tType yes if you do! \n\n\n\tType exit to exit if you want to exit the program...\n\tpress anything else to create an acount!");
 
-			Console.WriteLine("\tWelcome to the PokeMart Express press \n\t 1 to create an acount \n\t 2 to log in");
+			Console.Write("\tWelcome to the PokeMart Express press \n\t 1 to create an acount \n\t 2 to log in: ");
 			// catching the response editing it and moving on  //
 			int resoponse = CheckIntResponse(Console.ReadLine(), 1, 2);
 
@@ -33,9 +37,15 @@ namespace POMain
 			{ LogIn(); }
 		}
 
+
+
+
 		//create an acount updated
 		//follow get default store to edit comit
 		//
+		/// <summary>
+		/// allows a user to create an account
+		/// </summary>
 		public void CreateAnAccount()
 		{
 			Console.Write($"\tWelcome to the world of pokemon young trainer!\n\t what is your firstname: ");
@@ -46,11 +56,13 @@ namespace POMain
 
 			string lastName = CheckStringResponse(Console.ReadLine());
 
-			Console.WriteLine($"\tWhat is your username: ");
+			//Console.Write($"\tWhat is your username: ");
 
-			string userName = CheckStringResponse(Console.ReadLine());
+			//string userName = CheckStringResponse(Console.ReadLine());
 
-			Console.WriteLine($"\tWhat is your password: ");
+			//Console.Write($"\tWhat is your password: ");
+
+			//Console.ReadLine();
 
 			//Console.WriteLine("\tPlease choose a store by pressing\n\t1 for Pallet\n\t2 for Lavender \n\t3 for Cerulean");
 
@@ -60,6 +72,11 @@ namespace POMain
 		}
 
 		//this needs to have the commit updated
+		/// <summary>
+		/// creates a default store to shop at
+		/// </summary>
+		/// <param name="firstName">takes the previous methods first name</param>
+		/// <param name="lastName">takes the previous methods last name</param>
 		public void GetDefaultStore(string firstName, string lastName)
 		{
 
@@ -76,7 +93,7 @@ namespace POMain
 				int[] checkStoreLocation = new int[3];
 				foreach (var store in storeNames)
 				{
-					Console.WriteLine($"\t{store.LocationId} for the {store.LocationName} location.");
+					Console.Write($"\t{store.LocationId} for the {store.LocationName} location.");
 					checkStoreLocation[i] = store.LocationId;
 					i++;
 
@@ -93,10 +110,12 @@ namespace POMain
 			} while (stayInTheLoopBoy);
 
 
-			//ComitCustomer(lastName, firstName, storeLocationID);
+			Logic.ComitCustomer(firstName, lastName, storeLocationID);
 
 		}
-
+		/// <summary>
+		/// the method that allows a user to log in information for log in
+		/// </summary>
 		public void LogIn()
 		{
 			//takes in the last name
@@ -106,7 +125,7 @@ namespace POMain
 
 			//string lastName = rawLastName.ToLower().Trim();
 
-			Console.Write("\twhat is your first name: ");
+			Console.Write("\twhat is your last name: ");
 
 			string lastName = CheckStringResponse(Console.ReadLine());
 
@@ -168,7 +187,10 @@ namespace POMain
 
 		}
 
-
+		/// <summary>
+		/// checks if the user still wants to use the app
+		/// </summary>
+		/// <returns></returns>
 		public bool StillShopping()
 		{
 
@@ -185,7 +207,9 @@ namespace POMain
 
 
 
-
+		/// <summary>
+		/// outo comision at the moment
+		/// </summary>
 		public void exit()
 		{
 			Console.WriteLine("\tHey, \n\thave a good day!");
@@ -198,6 +222,14 @@ namespace POMain
 		//needs to check for string values
 		//needs to check for string values
 		//needs to check for string values
+
+		/// <summary>
+		/// validates the users int inputs
+		/// </summary>
+		/// <param name="userInput">what ever the users input is</param>
+		/// <param name="intMin">min int</param>
+		/// <param name="intMax">max int</param>
+		/// <returns></returns>
 		public int CheckIntResponse(string userInput, int intMin, int intMax)
 		{
 			int intToCheck = 0;
@@ -216,7 +248,11 @@ namespace POMain
 			return intToCheck;
 
 		}
-
+		/// <summary>
+		/// validates users string inputs
+		/// </summary>
+		/// <param name="userInput">just needs the users strings</param>
+		/// <returns></returns>
 		public string CheckStringResponse(string userInput)
 		{
 			userInput.Trim().ToLower();

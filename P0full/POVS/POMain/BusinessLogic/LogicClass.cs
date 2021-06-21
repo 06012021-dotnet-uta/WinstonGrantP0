@@ -12,11 +12,16 @@ namespace BusinessLogic
 
 		P0Context context = new P0Context();
 
-
+		/// <summary>
+		/// commits the users to the database
+		/// </summary>
+		/// <param name="FName">needs the users first name</param>
+		/// <param name="LName">needs the users last name</param>
+		/// <param name="storeID">needs a default store</param>
 		public void ComitCustomer(string FName, string LName, int storeID)
 		{
 			//saves the username and gens the id as a password
-			Console.WriteLine($"\tHello {FName} {LName} Congratulations on creating an acount!");
+			
 
 			var newcust = new DataBase.Customer();
 
@@ -26,55 +31,26 @@ namespace BusinessLogic
 			context.Add(newcust);
 			context.SaveChanges();
 
-			//GetDefaultStore();
+			Console.WriteLine($"\tHello {FName} {LName} Congratulations on creating an acount!");
 
 		}
 
-		public void GetDefaultStore(string lastName, string firstName)
-		{
-
-			var storeNames = from stores in context.StoreLocations
-							 where stores.LocationId > 1
-							 select stores;
-			int storeLocationID;
-			bool stayInTheLoopBoy = true;
-			do
-			{
-				Console.WriteLine("\t Please choose the city you'd like as your default pokemart location");
-
-				int i = 0;
-				int[] checkStoreLocation = new int[3];
-				foreach (var store in storeNames)
-				{
-					Console.WriteLine($"\t{store.LocationId} for the {store.LocationName} location.");
-					checkStoreLocation[i] = store.LocationId;
-					i++;
-
-				}
-				//gives the pw to the user
-
-				string rawUserInput = Console.ReadLine();
-				bool tryUserInput = Int32.TryParse(rawUserInput, out int userInput);
-
-				stayInTheLoopBoy = (userInput != checkStoreLocation[0] && userInput != checkStoreLocation[1] && userInput != checkStoreLocation[2]);
-				//Console.WriteLine($"{checkStoreLocation[0]}, {checkStoreLocation[1]},{checkStoreLocation[2]}, {userInput}, {stayInTheLoopBoy}");
-				storeLocationID = userInput;
-
-			} while (stayInTheLoopBoy);
-
-
-			ComitCustomer(lastName, firstName, storeLocationID);
-
-		}
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="firstName"></param>
+		/// <param name="lastName"></param>
+		/// <param name="returnCustomer"></param>
+		/// <returns></returns>
 		public bool LogInCheck(string firstName, string lastName, out Customer returnCustomer)
 		{
-			Console.WriteLine( context.Customers.Count());
+			//Console.WriteLine( context.Customers.Count());
 			try
 			{
 				var checkInformationRaw = from c in context.Customers
 							where c.Lname == lastName && c.Fname == firstName
 							select c;
-				 returnCustomer = checkInformationRaw.SingleOrDefault();
+				 returnCustomer = checkInformationRaw.FirstOrDefault();
 
 				if (returnCustomer == null)
 				{ return false; }
@@ -123,13 +99,13 @@ namespace BusinessLogic
 			//}
 		}
 
-		public void storeAccess(string lastName) 
-		{
-			Console.WriteLine();
-
-
-		}
-
+		/// <summary>
+		/// This checks responseses from user that are supposed to be int
+		/// </summary>
+		/// <param name="userInput">an integer from the user</param>
+		/// <param name="intMin">what the min can be</param>
+		/// <param name="intMax">what the max can be</param>
+		/// <returns>the checked integer</returns>
 		public int CheckIntResponse(string userInput, int intMin, int intMax)
 		{
 			int intToCheck = 0;
@@ -150,6 +126,11 @@ namespace BusinessLogic
 
 		}
 
+		/// <summary>
+		/// checks string inputs
+		/// </summary>
+		/// <param name="userInput">what ever the input was</param>
+		/// <returns>validated strings</returns>
 		public string CheckStringResponse(string userInput)
 		{
 			userInput.Trim().ToLower();
